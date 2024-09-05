@@ -3,36 +3,110 @@ import pepe.*
 describe "Sueldo Pepe" {
 
 	test "Test 1" {
-		pepe.cargo(cadete)
-		pepe.bonoRes(montoFijo)
-		pepe.bonoPres(normal)
+		pepe.categoria(cadete)
+		pepe._bonoRes_(montoFijo)
+		pepe._bonoPres_(normal)
 		pepe.faltas(3)
 
 		assert.equals(20800, pepe.sueldo())
 	}
 	test "Test 2" {
-		pepe.cargo(gerente)
-		pepe.bonoRes(porcentaje)
-		pepe.bonoPres(nulo)
+		pepe.categoria(gerente)
+		pepe._bonoRes_(porcentaje)
+		pepe._bonoPres_(nulo)
 		pepe.faltas(0)
 
 		assert.equals(16500, pepe.sueldo())
 	}
 	test "Test 3" {
-		pepe.cargo(cadete)
-		pepe.bonoRes(porcentaje)
-		pepe.bonoPres(normal)
+		pepe.categoria(cadete)
+		pepe._bonoRes_(porcentaje)
+		pepe._bonoPres_(normal)
 		pepe.faltas(0)
 
 		assert.equals(24000, pepe.sueldo())
 	}
 	test "Test 4" {
-		pepe.cargo(cadete)
-		pepe.bonoRes(porcentaje)
-		pepe.bonoPres(normal)
+		pepe.categoria(cadete)
+		pepe._bonoRes_(porcentaje)
+		pepe._bonoPres_(normal)
 		pepe.faltas(1)
 
 		assert.equals(23000, pepe.sueldo())
 	}
 	
+}
+
+
+
+
+
+describe "Bono" {
+
+	test "Test 1" {
+		medioTiempo.categoriaBase(cadete) 
+		pepe.categoria(medioTiempo) //--> NETO: 10000
+		pepe._bonoRes_(porcentaje) 	//--> bonoRes :1000
+		pepe._bonoPres_(demagogico)	//--> bonoPres :300
+		pepe.faltas(1) 		//NO AFECTA XQ ES DEMAGOG.
+		//--> SUELDO PEPE: 11300. Estaba mal el del enunciado!!!
+
+		roque.bonoRes(montoFijo)
+
+		ernesto.companiero(pepe)
+		ernesto.bonoPres(ajuste)
+
+		assert.equals(11300, pepe.sueldo()) //Estaba mal el del enunciado!!!
+		assert.equals(pepe, ernesto.companiero())
+		assert.equals(37800, roque.sueldo())
+
+
+	}
+	
+}
+
+//---------------TEST PROFESOR
+
+
+describe "Sueldo Pepe Prof" {
+	
+
+	test "bono presentismo Nulo" {
+		
+		pepe._bonoPres_(nulo)
+		assert.equals(0, pepe.bonoPres())
+	}
+
+	test "bono presentismo normal" {
+		pepe._bonoPres_(normal)
+		pepe.faltas(0) 
+		assert.equals(2000, pepe.bonoPres())
+
+		pepe.faltas(1) 
+		assert.equals(1000, pepe.bonoPres())
+
+		pepe.faltas(2) 
+		assert.equals(0, pepe.bonoPres())
+	}
+
+
+
+
+	test "bono presentismo ajuste" {
+		pepe._bonoPres_(ajuste)
+		pepe.faltas(0) 
+		assert.equals(100, pepe.bonoPres())
+		pepe.faltas(1) 
+		assert.equals(0, pepe.bonoPres())
+	}
+
+	test "bono presentismo demagogico" {
+		pepe.categoria(gerente)
+		pepe._bonoPres_(demagogico)
+		assert.equals(300, pepe.bonoPres())
+
+		pepe.categoria(cadete)
+		assert.equals(500, pepe.bonoPres())
+
+	}
 }

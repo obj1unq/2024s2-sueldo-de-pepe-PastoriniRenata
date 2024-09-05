@@ -1,29 +1,37 @@
 object pepe {
-    var cargo = cadete
-    var bonoRes  = nulo
-    var bonoPres = nulo
+    var categoria = cadete
+    var _bonoRes_  = nulo
+    var _bonoPres_ = nulo
     var faltas = 0
 	
-    method cargo(){
-        return cargo
+    method categoria(){
+        return categoria
     }
-    method cargo(_cargo){
-        cargo = _cargo
+    method categoria(_categoria){
+        categoria = _categoria
     }
 
     method sueldo(){
-        return self.neto() + bonoRes.bonoResultado(self) + bonoPres.bonoPresentismo(self)
+        return self.neto() +  self.bonoRes() + self.bonoPres()
     }
 
     method neto(){
-        return cargo.neto()
+        return categoria.neto()
     }
-    method bonoRes(_bonoRes){
-        bonoRes = _bonoRes
+    method  _bonoRes_(_bonoRes){
+         _bonoRes_ = _bonoRes
     }
 
-    method bonoPres(_bonoPres){
-        bonoPres = _bonoPres
+    method _bonoPres_(_bonoPres){
+        _bonoPres_ = _bonoPres
+    }
+
+    method bonoRes(){
+        return  _bonoRes_.bonoResultado(self)
+    }
+
+    method bonoPres(){
+        return  _bonoPres_.bonoPresentismo(self)
     }
 
     method faltas(){
@@ -111,5 +119,115 @@ object cadete{
         return 20000    
     }
 }
+
+//--------------------------------------BONUS-------------------------------
+
+object sofia {
+    var categoria = cadete
+    var bonoRes  = nulo
+	
+    method categoria(){
+        return categoria
+    }
+    method categoria(_categoria){
+        categoria = _categoria
+    }
+
+    method sueldo(){
+        return self.neto() + bonoRes.bonoResultado(self)
+    }
+
+    method neto(){
+        return categoria.neto() * 1.3
+    }
+    method bonoRes(_bonoRes){
+        bonoRes = _bonoRes
+    }
+
+
+}
+
+object vendedor{
+    var _neto = 16000
+
+    method neto(){
+        return _neto
+    }
+
+    method activarAumentoPorMuchasVentas(){
+        _neto = _neto * 1.25 
+    }
+    
+    method desactivarAumentoPorMuchasVentas(){
+        _neto = _neto / 1.25 
+    }
+}
+
+
+object medioTiempo {
+    var _neto = 1
+
+    method categoriaBase(categoria){
+        _neto = categoria.neto()/2
+    }
+
+    method neto(){
+        return _neto
+    }
+
+}
+
+
+
+
+object roque {
+    var bonoRes  = nulo
+    
+    method sueldo(){
+        return self.neto() + bonoRes.bonoResultado(self) + 9000
+    }
+
+    method neto(){
+        return 28000
+    }
+
+    method bonoRes(_bonoRes){
+        bonoRes = _bonoRes
+    }
+}
+
+
+object ernesto {
+    var bonoPres  = nulo
+    var companiero = 0
+    method sueldo(){
+        return self.neto() + bonoPres.bonoPresentismo(self) + 9000
+    }
+
+    method neto(){
+        return companiero.neto()
+    }
+
+
+    method companiero(compa){
+        companiero = compa
+    }
+    method companiero(){
+        return companiero
+    }
+    method bonoPres(_bonoPres){
+        bonoPres = _bonoPres
+    }
+    method faltas(){
+        return 0 // "Se sabe que ernesto no falta nunca"
+    }
+}
+
+
+
+
+
+
+
 
 
